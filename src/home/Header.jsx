@@ -1,7 +1,7 @@
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import Image from 'next/image'
-import LoginDialog from './login/LoginDialog';
-import Navbar from './Navbar';
+import { useAppContext } from '../context/state';
+import LSDialog from './login/LSDialog';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
     const classes = useStyles()
+    // const test = useAppContext(state => state.test)
+
 
     return (
         <div className={classes.root}>
@@ -37,7 +39,7 @@ function Header() {
             <Button variant="contained" color="primary" className={classes.button}>
                 Level Up
             </Button>
-            <LoginDialog /> 
+            <LSDialog /> 
         </div>
     )
 }

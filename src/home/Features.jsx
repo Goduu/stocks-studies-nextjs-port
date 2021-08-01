@@ -132,7 +132,7 @@ function Features() {
                     alignItems="center">
                     {features.map(f => {
                         return (
-                            <FeatureCard feature={f} />
+                            <FeatureCard key={f.headline} feature={f} />
                         )
                     })}
                 </Grid>

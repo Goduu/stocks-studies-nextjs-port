@@ -56,7 +56,7 @@ function MultichartInterface(props) {
                     justifyContent="space-between"
                     alignItems="flex-start"
                     container spacing={1}>
-                    <Grid xs={6} >
+                    <Grid item xs={6} >
                         <Typography variant="subtitle1">
                             {title}
                         </Typography>
