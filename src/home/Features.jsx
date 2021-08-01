@@ -1,7 +1,6 @@
-import { Box, Card, CardContent, CardMedia, Container, Grid, IconButton, ImageList, ImageListItem, makeStyles, Paper, SvgIcon, Typography } from '@material-ui/core';
+import { Box, Button, Card, CardContent, CardMedia, Container, Grid, IconButton, ImageList, ImageListItem, makeStyles, Paper, SvgIcon, Typography } from '@material-ui/core';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import NoteIcon from '@material-ui/icons/Note';
-import FiberNewIcon from '@material-ui/icons/FiberNew';
 import EcoIcon from '@material-ui/icons/Eco';
 import HdrWeakIcon from '@material-ui/icons/HdrWeak';
 import LabelIcon from '@material-ui/icons/Label';
@@ -23,12 +22,12 @@ const useStyles = makeStyles((theme) => ({
         minHeight: '100vh',
         zIndex: 4,
         background: `-webkit-linear-gradient(90deg, ${theme.palette.common.white} 93%, ${theme.palette.background.paper} 33%)`,
-        paddingTop: '-100px',
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingBottom: theme.spacing(50)
+        paddingBottom: theme.spacing(3)
+        
     },
     boxItem: {
         padding: theme.spacing(1),
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 
     },
-    featuresBox:{
+    featuresBox: {
         display: 'flex',
         [theme.breakpoints.down("md")]: {
             display: 'inline',
@@ -64,41 +63,37 @@ function Features() {
             headline: "Price and Volume Charts",
             text:
                 "Have an overview about the price and volume of your stocks",
-            icon: <TrendingUpIcon style={{ fontSize: '5em', color: theme.palette.secondary.main }} />,
-            mdDelay: "0",
-            smDelay: "0"
+            icon: <TrendingUpIcon style={{ fontSize: '3em', color: theme.palette.common.white }} />,
+            color: theme.palette.secondary.main,
         },
         {
             headline: "Statistics",
             text:
                 "A bunch of ratios, statistics and key indicators avaliable for each stock.",
-            icon: <LabelIcon style={{ fontSize: '5em', color: theme.palette.primary.main }} />,
-            mdDelay: "400",
-            smDelay: "0"
+            icon: <LabelIcon style={{ fontSize: '3em', color: theme.palette.common.white }} />,
+            color: theme.palette.primary.main,
         },
         {
             headline: "Notes",
             text:
                 "Make your own notes about every stocks",
-            icon: <NoteIcon style={{ fontSize: '5em', color: theme.palette.triad.green }} />,
-            mdDelay: "200",
-            smDelay: "200"
+            icon: <NoteIcon style={{ fontSize: '3em', color: theme.palette.common.white }} />,
+            color: theme.palette.triad.yellow,
         },
         {
             headline: "ESG Risk",
             text:
                 "Compare your stocks with its peers",
-            icon: <EcoIcon style={{ fontSize: '5em', color: theme.palette.triad.green }} />,
-            mdDelay: "400",
-            smDelay: "0"
+            icon: <EcoIcon style={{ fontSize: '3em', color: theme.palette.common.white }} />,
+            color: theme.palette.triad.green,
         },
         {
             headline: "SWOT Analysis",
             text:
                 "An specific Card for your swot analysis.",
-            icon: <HdrWeakIcon style={{ fontSize: '5em', color: theme.palette.triad.red }} />,
-            mdDelay: "400",
-            smDelay: "0"
+            icon: <HdrWeakIcon style={{ fontSize: '3em', color: theme.palette.common.white }} />,
+            color: theme.palette.triad.red,
+
         },
     ]
 
@@ -114,14 +109,14 @@ function Features() {
                         <Grid item xs>
                             <SvgCard
                                 title="Watchlist"
-                                subtitle="Make your own stock watchlist and compare it's numbers in an easy way"
+                                subtitle="Make your own stock watchlist and compare their numbers in an easy way"
                                 image={<Image src="/svg/watchlist.svg" alt="me" width="180" height="225" />}
                             />
                         </Grid>
                         <Grid item xs>
                             <SvgCard
                                 title="Stock Grid"
-                                subtitle="Create an amazing customized dashboard grid"
+                                subtitle="Create an amazing dashboard grid, customized as you wannt"
                                 image={<Image src="/svg/grid.svg" alt="me" width="180" height="180" />}
                             />
                         </Grid>
@@ -129,26 +124,18 @@ function Features() {
 
                 </div>
 
-                <Typography variant='h4'>
-                    Grid Cards
-                </Typography>
-                <Box className={classes.featuresBox}>
+                <Grid container
+                    spacing={2}
+                    className={classes.featuresBox}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center">
                     {features.map(f => {
                         return (
-                            <Box className={classes.boxItem}>
-                                <Paper style={{padding: '8px'}}>
-                                    {f.icon}
-                                    <Typography variant="h5" paragraph>
-                                        {f.headline}
-                                    </Typography>
-                                    <Typography variant="body1" color="textSecondary">
-                                        {f.text}
-                                    </Typography>
-                                </Paper>
-                            </Box>
+                            <FeatureCard feature={f} />
                         )
                     })}
-                </Box>
+                </Grid>
             </Paper>
         </div>
     )
@@ -196,6 +183,62 @@ function SvgCard(props) {
             </div>
 
         </Box>
+    );
+}
+
+
+const useStylesFCard = makeStyles((theme) => ({
+    box: {
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        margin: theme.spacing(2),
+        marginTop: theme.spacing(5),
+
+
+    },
+    upperBox: {
+        left: '10%',
+        top: -theme.spacing(3),
+        position: 'absolute',
+        padding: theme.spacing(1),
+        transition: 'transform .2s',
+        '&:hover': {
+            color: 'red',
+            transform: 'scale(1.3)'
+        }
+    },
+    mainBox: {
+        paddingTop: theme.spacing(4),
+        padding: theme.spacing(2),
+        width: '100%',
+        height: '180px'
+    }
+
+
+}));
+
+function FeatureCard(props) {
+    const classes = useStylesFCard();
+    const theme = useTheme();
+    const { feature } = props
+
+    return (
+        <Grid item xs={12} md={4} className={classes.box}>
+            <Button className={classes.upperBox} style={{ backgroundColor: feature.color }}>
+                {feature.icon}
+            </Button>
+            <Paper className={classes.mainBox} variant="outlined">
+                <Typography variant="h6" paragraph align='center'>
+                    {feature.headline}
+                </Typography>
+                <Typography variant="body1" color="textSecondary" align='center'>
+                    {feature.text}
+                </Typography>
+            </Paper>
+        </Grid>
     );
 }
 
