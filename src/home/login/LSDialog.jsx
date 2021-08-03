@@ -1,16 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { Box, Checkbox, IconButton, Input, InputAdornment, TextField, makeStyles, Typography, Link } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import Login from './Login';
 import SingUp from './SignUp';
 import TermsOfService from './TermsOfService';
+import axios from 'axios';
+import { useAppContext } from '../../context/state';
+import { useRouter } from 'next/router';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -33,6 +32,29 @@ export default function LSDialog() {
     const [loginForm, setLoginForm] = useState({ email: '', password: '', passShow: true, });
     const [signupForm, setSignupForm] = useState({ email: '', password: '', passConfirm: '', acceptTerms: false, passShow: true });
     const [termOfServicesOpen, setTermsOfServicesOpen] = useState(false);
+    const router = useRouter()
+    const states = useAppContext()
+    const apiUrl = states.apiUrl
+
+    const loginRequest = () => {
+        const headers = { headers: { 'Content-Type': 'application/json' } }
+        console.log(loginForm)
+        return new Promise((resolve, reject) => {
+            console.log("-", states)
+            axios.post(apiUrl + 'user/login', loginForm, headers)
+                .then(res => {
+                    states.auth.token = res.data.authToken
+                    states.auth.name = res.data.name
+                    states.auth.email = res.data.email
+                    states.auth.avatar = res.data.avatar
+                    states.auth.roles = res.data.roles
+                    router.push('/in/Grid')
+                })
+                .catch(e => {
+                    reject(e)
+                })
+        });
+    }
 
     const handleClickOpen = () => {
         setLoginOpen(true);
@@ -64,10 +86,9 @@ export default function LSDialog() {
         });
     };
     const loginHandleChange = (type, e) => {
-        console.log("askldslakd", type, e)
         setLoginForm(prev => {
             const temp = { ...prev }
-            temp[type] = e.target.valeu
+            temp[type] = e.target.value
             return temp
         }
         )
@@ -110,6 +131,7 @@ export default function LSDialog() {
                 handleMouseDownPassword={loginHandleMouseDownPassword}
                 handleClickShowPassword={loginHandleClickShowPassword}
                 handleChange={loginHandleChange}
+                loginRequest={loginRequest}
             />
             <SingUp
                 open={signUpOpen}

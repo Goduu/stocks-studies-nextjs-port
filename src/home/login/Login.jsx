@@ -20,7 +20,7 @@ const useTheme = makeStyles(theme => ({
         flexDirection: "column",
         alignItems: "center",
     },
-    user: {
+    email: {
         marginTop: theme.spacing(2),
         width: '100%'
     },
@@ -45,6 +45,7 @@ export default function Login(props) {
         open,
         form,
         signUp,
+        loginRequest,
         handleClose,
         handleMouseDownPassword,
         handleClickShowPassword,
@@ -66,8 +67,13 @@ export default function Login(props) {
 
                     </DialogContentText>
                     <Fragment >
-                        <div className={classes.user}>
-                            <TextField fullWidth type='email' variant='outlined' label='E-mail' />
+                        <div className={classes.email}>
+                            <TextField
+                                value={form.email}
+                                onChange={(e) => handleChange('email', e)}
+                                fullWidth type='email'
+                                variant='outlined'
+                                label='E-mail' />
                         </div>
                         <div className={classes.password}>
                             <TextField
@@ -100,7 +106,7 @@ export default function Login(props) {
                     </Fragment>
                     <Box className={classes.actionButton}>
 
-                        <Button variant="contained" color="secondary" fullWidth>
+                        <Button onClick={loginRequest} variant="contained" color="secondary" fullWidth>
                             Login
                         </Button>
                     </Box>
@@ -136,5 +142,6 @@ Login.propTypes = {
     handleClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     signUp: PropTypes.func.isRequired,
+    loginRequest: PropTypes.func.isRequired,
 };
 

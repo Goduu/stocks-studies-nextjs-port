@@ -40,8 +40,8 @@ const useTheme = makeStyles(theme => ({
 }))
 
 export default function SignUp(props) {
-    const { open, handleClose, login } = props
     const classes = useTheme()
+    const { open, handleClose, login } = props
     const { form, handleMouseDownPassword, handleClickShowPassword, handleChange,
         handleTermOfServicesOpen } = props
 

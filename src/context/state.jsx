@@ -4,7 +4,13 @@ const AppContext = createContext();
 
 export function StateContext({ children }) {
   let sharedState = {
-    apiUrl: 'https://stocks-studies-java.herokuapp.com/api/'
+    apiUrl: 'https://stocks-studies-java.herokuapp.com/api/',
+    auth: {
+      email: '',
+      token: '',
+      name: '',
+      roles: [],
+    }
   }
 
   return (
