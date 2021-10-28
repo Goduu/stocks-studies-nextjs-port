@@ -7,7 +7,7 @@ import Login from './Login';
 import SingUp from './SignUp';
 import TermsOfService from './TermsOfService';
 import axios from 'axios';
-import { useAppContext } from '../../context/state';
+import { useStateContext } from '../../context/state';
 import { useRouter } from 'next/router';
 
 
@@ -33,7 +33,7 @@ export default function LSDialog() {
     const [signupForm, setSignupForm] = useState({ email: '', password: '', passConfirm: '', acceptTerms: false, passShow: true });
     const [termOfServicesOpen, setTermsOfServicesOpen] = useState(false);
     const router = useRouter()
-    const states = useAppContext()
+    const states = useStateContext()
     const apiUrl = states.apiUrl
 
     const loginRequest = () => {
@@ -43,12 +43,14 @@ export default function LSDialog() {
             console.log("-", states)
             axios.post(apiUrl + 'user/login', loginForm, headers)
                 .then(res => {
+                    console.log("res", res)
                     states.auth.token = res.data.authToken
-                    states.auth.name = res.data.name
-                    states.auth.email = res.data.email
-                    states.auth.avatar = res.data.avatar
-                    states.auth.roles = res.data.roles
-                    router.push('/in/Grid')
+                    states.auth.name = res.data.info.name
+                    states.auth.email = res.data.info.email
+                    states.auth.avatar = res.data.info.avatar
+                    states.auth.roles = res.data.info.roles
+                    states.auth.id = res.data.info.id
+                    router.push('/in/grid')
                 })
                 .catch(e => {
                     reject(e)

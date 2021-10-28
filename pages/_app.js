@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
 import { StateContext } from '../src/context/state';
 import NavBar from '../src/navbar/Navbar';
+import { SnackbarProvider } from 'notistack';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -20,19 +21,20 @@ export default function MyApp(props) {
 
   return (
     <React.Fragment>
-      <StateContext>
-        <Head>
-          <title>UppLevel</title>
-          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-        </Head>
-        <NavBar>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </NavBar>
-      </StateContext>
+      <ThemeProvider theme={theme}>
+          <StateContext>
+            <Head>
+              <title>UppLevel</title>
+              <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+            </Head>
+            <NavBar>
+
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <Component {...pageProps} />
+            </NavBar>
+          </StateContext>
+      </ThemeProvider>
     </React.Fragment>
   );
 }

@@ -5,13 +5,18 @@
     "dependencies": {
         "@material-ui/core": "latest",
         "@material-ui/icons": "^4.11.2",
+        "@material-ui/lab": "^4.0.0-alpha.60",
         "avataaars": "^1.2.2",
         "axios": "^0.21.1",
         "clsx": "latest",
+        "date-fns": "^2.23.0",
         "next": "latest",
+        "notistack": "^1.0.10",
         "prop-types": "latest",
         "react": "latest",
         "react-dom": "latest",
+        "react-grid-layout": "^1.2.5",
+        "react-i18next": "^11.11.4",
         "recharts": "^2.0.10"
     },
     "scripts": {

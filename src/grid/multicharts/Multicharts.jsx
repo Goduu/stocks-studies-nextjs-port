@@ -1,11 +1,10 @@
 import { React, useState, useEffect } from 'react';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux'
 import { useCallback } from 'react';
-import { fetchPriceData, fetchDividendData, fetchFinancialHistory } from '../../../../shared/functions/requests'
 import { format, compareAsc } from "date-fns";
 import _ from 'lodash'
 import { MultichartInterface } from './MultichartsInterface'
+import { useStateContext } from "../../context/state";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +32,7 @@ function Multichart(props) {
     const classes = useStyles();
     // const { t } = useTranslation();
     const ticker = props.identifier
-    const token = useSelector(state => state.auth.token)
+    const states = useStateContext()
     const [configOpen, setConfigOpen] = useState(true);
     const [charts, setCharts] = useState([]);
     const [chartsData, setChartsData] = useState([]);

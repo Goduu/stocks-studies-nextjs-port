@@ -20,6 +20,6 @@ export function StateContext({ children }) {
   );
 }
 
-export function useAppContext() {
+export function useStateContext() {
   return useContext(AppContext);
 }

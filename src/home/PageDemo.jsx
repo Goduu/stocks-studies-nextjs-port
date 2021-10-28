@@ -1,6 +1,6 @@
 import { Box, Button, Hidden, makeStyles, Paper, Typography } from "@material-ui/core"
 import Image from "next/image"
-import StatisticExample from '../../src/grid/statistic/StatisticExample'
+import StatisticExample from '../grid/statistics/StatisticExample'
 import { MainCardTemplate } from "../grid/card/MainCardTemplate"
 import { MultichartTemplate } from "../grid/multicharts/MultichartsTemplate"
 

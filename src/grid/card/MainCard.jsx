@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, Typography, LinearProgress } from '@material-ui/core';
-import { getQuoteData } from '../../../../shared/functions/requests.js';
 import Stockinfos from './StockInfos';
-import { useSelector } from 'react-redux';
 import Card from '../Card'
 import Skeleton from '@material-ui/lab/Skeleton';
+import { useStateContext } from "../../context/state";
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,8 +36,9 @@ function MainCard(props) {
     const [data, setData] = useState(undefined)
     const [dialogOpen, setDialogOpen] = useState(false)
     const [loading, setLoading] = useState(false)
-    const token = useSelector(state => state.auth.token)
-
+    const states = useStateContext()
+    const apiUrl = states.apiUrl
+    const token = states.auth.token
     useEffect(() => {
         setLoading(true)
         getQuoteData(ticker, token)
@@ -46,6 +47,25 @@ function MainCard(props) {
                 setLoading(false)
             })
     }, [ticker])
+
+
+    function getQuoteData(tick, token) {
+
+        const headers = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            }
+        }
+
+        return new Promise((resolve, reject) => {
+            axios.get(apiUrl + 'stocks/data/' + tick, headers)
+                .then(res => {
+                    console.log("getQuoteData", res)
+                    resolve(res.data)
+                })
+        });
+    }
 
 
     return (
@@ -90,4 +110,4 @@ function MainCard(props) {
 
 }
 
-export {MainCard}
+export { MainCard }

@@ -16,7 +16,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from 'avataaars'
-import { useAppContext } from '../context/state';
+import { useStateContext } from '../context/state';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 
@@ -86,12 +86,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar({ children }) {
     const router = useRouter()
-    const states = useAppContext()
+    const states = useStateContext()
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-
+    console.log("states1",states)
+    console.log("states2",states)
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -120,13 +121,13 @@ export default function PrimarySearchAppBar({ children }) {
         router.push('/')
     }
 
-    useEffect(() => {
-        console.log("router", router)
-        console.log("states", states)
-        if(router.route.includes('/in/')  && states.auth.token === '') {
-            router.push('/')
-        }
-    }, [router, states])
+    // useEffect(() => {
+    //     console.log("router", router)
+    //     console.log("states", states)
+    //     if(router.route.includes('/in/')  && states.auth.token === '') {
+    //         router.push('/')
+    //     }
+    // }, [router, states])
 
 
     const menuId = 'primary-search-account-menu';
@@ -191,7 +192,7 @@ export default function PrimarySearchAppBar({ children }) {
         </Menu>
     );
 
-    if (router.route.includes('/in/') && states.auth.token !== '') {
+    if (router.route.includes('/in/') ) {
         return (
             <div className={classes.grow}>
                 <AppBar position="static" color='transparent'>
@@ -210,7 +211,7 @@ export default function PrimarySearchAppBar({ children }) {
 
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-                            <IconButton aria-label="show 4 new mails" color="inherit">
+                            <IconButton aria-label="show 4 new mails" color="inherit" onClick={() => {console.log('&&', states)}}>
                                 <Badge badgeContent={4} color="secondary">
                                     <MailIcon />
                                 </Badge>

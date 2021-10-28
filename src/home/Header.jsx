@@ -1,6 +1,5 @@
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import Image from 'next/image'
-import { useAppContext } from '../context/state';
 import LSDialog from './login/LSDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
     const classes = useStyles()
-    // const test = useAppContext(state => state.test)
+    // const test = useStateContext(state => state.test)
 
 
     return (
